@@ -72,16 +72,16 @@ def ask_question(query: Query):
 
 
 @app.post("/stream")
+@app.post("/stream")
 async def stream_response(query: Query):
-    def event_generator():
+    async def event_generator():
         llm = Ollama(
             model="mistral",
             callbacks=[StreamingStdOutCallbackHandler()]
         )
         qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
         response = qa_chain.run(query.question)
-        yield {"data": response}
+        for chunk in response.split("\n"):  # Assuming response can be split into chunks
+            yield chunk
 
-    event_source = EventSourceResponse(event_generator())
-    event_source.ping_interval = 600 #ping every 10 mins
-    return event_source
+    return StreamingResponse(event_generator(), media_type="text/plain")
