@@ -44,4 +44,4 @@ Chart.lock
 
 yarn-error.log
 
-__pycache__
+__pycache__/
