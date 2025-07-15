@@ -1,0 +1,45 @@
+## editors
+/.idea
+/.vscode
+/local-setup/.idea
+*.iml
+
+### venv
+/venv/
+
+## npm
+/node_modules/
+/npm-debug.log
+
+# build
+/dist/
+/dist-lib/
+
+docker-sha.txt
+*.tgz
+
+# analyzer stats
+/analyzer/stats.json
+
+# dependency-check
+/dependency-check
+/dependency-cache
+
+# Code coverage
+/coverage/
+
+.yalc
+yalc.lock
+.npmrc
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Okteto config file directory
+config
+
+#helm chart lock
+Chart.lock
+
+yarn-error.log

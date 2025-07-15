@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+langchain>=0.3.26
+langchain-community>=0.0.34
+faiss-cpu>=1.7.4
+ollama>=0.5.1
+tqdm
+unstructured
+python-multipart
+sse-starlette>=0.10.3
+markdown
