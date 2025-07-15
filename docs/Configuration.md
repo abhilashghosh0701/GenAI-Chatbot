@@ -1,6 +1,6 @@
 # Configuration UI
 
-We have created a simple UI that helps to configure SAF. The UI is available under: `symphony.${BASE_DOMAIN}/config`
+We have created a simple UI that helps to configure SAF. The UI is available under: `https://symphony.${BASE_DOMAIN}/config`
 
 ## How to use the configUI
 

@@ -9,7 +9,7 @@ from langchain_community.llms import Ollama
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OllamaEmbeddings
-from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader
+from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from time import sleep
@@ -30,11 +30,13 @@ DOCS_PATH = "docs/"
 embeddings = OllamaEmbeddings(model="mistral")
 
 
-def load_documents():
-    #text_loader = DirectoryLoader(DOCS_PATH, glob="**/*.txt")
-    #md_loader = DirectoryLoader(DOCS_PATH, glob="**/*.md", loader_cls=UnstructuredMarkdownLoader)
-    md_loader = DirectoryLoader(DOCS_PATH, glob="**/*.md", loader_cls=UnstructuredMarkdownLoader)
-    return  md_loader.load()
+# 1. Load documents from multiple files
+file_paths = [os.path.join("docs", file) for file in os.listdir("docs") if os.path.isfile(os.path.join("docs", file))]
+print(file_paths)
+documents = []
+for file_path in file_paths:
+    loader = TextLoader(file_path)
+    documents.extend(loader.load())
 
 
 def get_vectorstore():
@@ -42,7 +44,6 @@ def get_vectorstore():
         return FAISS.load_local('faiss_index', embeddings, allow_dangerous_deserialization=True)
 
     # Create the FAISS index if it doesn't exist
-    documents = load_documents()
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     docs = splitter.split_documents(documents)
 

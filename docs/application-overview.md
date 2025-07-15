@@ -1,8 +1,3 @@
----
-id: application-overview
-
-source: 1256849491
----
 
 # Application overview
 
