@@ -5,8 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from typing import Optional
 import os
-import markdown
-
 from langchain_community.llms import Ollama
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
@@ -14,9 +12,8 @@ from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from sse_starlette.sse import EventSourceResponse
-
-app = FastAPI(title="Ollama + RAG API (Markdown + Streaming)")
+from time import sleep
+app = FastAPI(title="GenAI Chatbot",)
 
 app.add_middleware(
     CORSMiddleware,
@@ -83,5 +80,6 @@ async def stream_response(query: Query):
         response = qa_chain.run(query.question)
         for chunk in response.split("\n"):  # Assuming response can be split into chunks
             yield chunk
+            sleep(0.3)
 
     return StreamingResponse(event_generator(), media_type="text/plain")
